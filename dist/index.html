@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>AES</title>
+    </head>
+    <body>
+        <script type="text/ractive" id="template">
+            <header class="mdc-top-app-bar">
+                <div class="mdc-top-app-bar__row">
+                    <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+                    <span class="mdc-top-app-bar__title">AES</span>
+                    </section>
+                </div>
+            </header>
+
+            <!-- <input type="file" value="{{key}}"><br/> -->
+            <section class="content">
+                <div class="mdc-card">
+                    <h2>Encrypt</h2>
+                    <TextField
+                        type="password"
+                        id="enc-password-text-field"
+                        name="dec-password"
+                        value="{{encPassword}}"
+                        label="Password"
+                        required
+                      />
+                    <div class="mdc-form-field">
+                      <div class="mdc-text-field" style="display:block;">
+                        <input type="file" value="{{encSrcFile}}">
+                      </div>
+                    </div>
+                    <div style="text-align: right;margin-top: 8px;">
+                        <Button on-click="encrypt" accent>Encrypt</Button>
+                    </div>
+                    <ul class="mdc-list">
+                    {{#encFiles:i}}
+                        <li class="mdc-list-item" tabindex="{{i}}">
+                            <a href="{{.}}" download="file{{i}}.txt"><span class="mdc-list-item__text">Download</span></a>
+                        </li>
+                    {{/}}
+                    </ul>
+                </div>
+
+                <div class="mdc-card">
+                    <h2>Decrypt</h2>
+                    <TextField
+                        type="password"
+                        id="dec-password-text-field"
+                        name="dec-password"
+                        value="{{decPassword}}"
+                        label="Password"
+                        required
+                      />
+                    <TextField
+                        type="text"
+                        id="dec-ext-text-field"
+                        name="dec-ext"
+                        value="{{decExt}}"
+                        label="extension(jpg/png/...)"
+                        required
+                      />
+                    <div class="mdc-form-field">
+                        <div class="mdc-text-field" style="display:block;">
+                            <input type="file" value="{{decSrcFile}}">
+                        </div>
+                    </div>
+                    <div style="text-align:right; margin-top: 8px;">
+                        <Button on-click="decrypt" accent>Decrypt</Button>
+                    </div>
+                    <ul class="mdc-list">
+                    {{#decFiles:i}}
+                        <li class="mdc-list-item" tabindex="{{i}}">
+                            <a href="{{.url}}" download="file{{i}}.{{.ext}}"><span class="mdc-list-item__text">Download</span></a>
+                        </li>
+                    {{/}}
+                    </ul>
+                </div>
+
+
+
+            {{#if fileURL.length > 0}}
+            <a href="{{fileURL}}" download="file.txt">Download</a>
+            {{/if}}
+            </section>
+        </script>
+        <script src="./main.js"></script>
+    </body>
+</html>
