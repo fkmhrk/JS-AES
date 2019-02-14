@@ -78,11 +78,91 @@
                     </ul>
                 </div>
 
+                <div class="mdc-card">
+                    <h2>Key generation</h2>
+                    <div style="text-align:right; margin-top: 8px;">
+                        <Button on-click="generateKey">Generate</Button>
+                    </div>
+                    <ul class="mdc-list">
+                    {{#if pubKeyURL.length > 0}}
+                        <li class="mdc-list-item" tabindex="{{0}}">
+                            <a href="{{pubKeyURL}}" download="publicKey.pem"><span class="mdc-list-item__text">Download public key</span></a>
+                        </li>
+                    {{/if}}
+                    {{#if privKeyURL.length > 0}}
+                        <li class="mdc-list-item" tabindex="{{1}}">
+                            <a href="{{privKeyURL}}" download="privateKey.pem"><span class="mdc-list-item__text">Download private key</span></a>
+                        </li>
+                    {{/if}}
+                    </ul>
+                </div>
 
+                <div class="mdc-card">
+                    <h2>Encrypt with Public key</h2>
+                    <div class="mdc-form-field">
+                      <label class="mdc-label">Public key file</label>
+                      <div class="mdc-text-field" style="display:block;">
+                        <input type="file" value="{{pubKeyFile}}">
+                      </div>
+                    </div>
+                    <div class="mdc-form-field">
+                      <label class="mdc-label">File to be encrypted</label>
+                      <div class="mdc-text-field" style="display:block;">
+                        <input type="file" value="{{pubKeyEncSrcFile}}">
+                      </div>
+                    </div>
+                    <div style="text-align:right; margin-top: 8px;">
+                        <Button on-click="encryptWithPubKey">Encrypt</Button>
+                    </div>
+                    <ul class="mdc-list">
+                    {{#keyEncFiles:i}}
+                        <li class="mdc-list-item" tabindex="{{i}}">
+                            <a href="{{.keyURL}}" download="key{{i}}.txt"><span class="mdc-list-item__text">Download Key</span></a> /
+                            <a href="{{.bodyURL}}" download="file{{i}}.txt"><span class="mdc-list-item__text">Download Body</span></a>
+                        </li>
+                    {{/}}
+                    </ul>
+                </div>
 
-            {{#if fileURL.length > 0}}
-            <a href="{{fileURL}}" download="file.txt">Download</a>
-            {{/if}}
+                <div class="mdc-card">
+                    <h2>Decrypt with Private key</h2>
+                    <div class="mdc-form-field">
+                      <label class="mdc-label">Private key file</label>
+                      <div class="mdc-text-field" style="display:block;">
+                        <input type="file" value="{{privateKeyFile}}">
+                      </div>
+                    </div>
+                    <div class="mdc-form-field">
+                      <label class="mdc-label">Key file</label>
+                      <div class="mdc-text-field" style="display:block;">
+                        <input type="file" value="{{keyFile}}">
+                      </div>
+                    </div>
+                    <div class="mdc-form-field">
+                      <label class="mdc-label">Encrypted file</label>
+                      <div class="mdc-text-field" style="display:block;">
+                        <input type="file" value="{{pubKeyDecSrcFile}}">
+                      </div>
+                    </div>
+                    <TextField
+                        type="text"
+                        id="dec-ext-text-field"
+                        name="dec-ext"
+                        value="{{keyDecExt}}"
+                        label="extension(jpg/png/...)"
+                        required
+                      />
+                    <div style="text-align:right; margin-top: 8px;">
+                        <Button on-click="decryptWithPrivateKey">Decrypt</Button>
+                    </div>
+                    <ul class="mdc-list">
+                    {{#keyDecFiles:i}}
+                        <li class="mdc-list-item" tabindex="{{i}}">
+                            <a href="{{.url}}" download="file{{i}}.{{.ext}}"><span class="mdc-list-item__text">Download</span></a>
+                        </li>
+                    {{/}}
+                    </ul>
+                </div>
             </section>
         </script>
         <script src="./main.js"></script>

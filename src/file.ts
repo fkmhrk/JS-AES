@@ -38,3 +38,13 @@ export const toUint8Array = (input: string) => {
     }
     return buffer;
 };
+
+export const arrayBufferToBase64 = (input: ArrayBuffer) => {
+    let binary = "";
+    const bytes = new Uint8Array(input);
+    const len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
+        binary += String.fromCharCode(bytes[i]);
+    }
+    return window.btoa(binary);
+};
